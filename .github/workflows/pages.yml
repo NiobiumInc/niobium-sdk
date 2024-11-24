@@ -4,7 +4,7 @@
 # Some code adapted from:
 #   https://github.com/gregrickaby/nextjs-github-pages/blob/main/.github/workflows/deploy.yml
 #
-name: Deploy GitHub Pages
+name: Developer Website
 
 on:
   push:

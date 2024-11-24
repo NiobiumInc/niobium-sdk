@@ -1,4 +1,4 @@
-name: Niobium FHE SDK CI
+name: Niobium SDK
 
 on:
   push:
@@ -34,8 +34,6 @@ jobs:
           GOPRIVATE: "github.com/NiobiumInc"
         run: |
           git config --global url."ssh://git@github.com/".insteadOf "https://github.com/"
-      - name: Install dependencies
-        run: make dep
       - name: Get OS Name & Arch
         run: |
           OS_NAME="$(echo ${{ runner.os }} | tr '[:upper:]' '[:lower:]')"
