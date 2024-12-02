@@ -1,0 +1,48 @@
+# Node.js dependencies
+node_modules/
+.npm/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+.pnp/
+.pnp.js
+
+# Next.js build output
+.next/
+out/
+
+# Static build artifacts
+build/
+
+# Vercel deployment
+.vercel/
+.env.local
+
+# Testing
+coverage/
+
+# Miscellaneous
+.DS_Store
+*.swp
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Environment files
+.env
+.env.*
+.env.local
+
+# IDE files
+*.code-workspace
+*.iml
+
+# Optional: TypeScript build artifacts
+*.tsbuildinfo
