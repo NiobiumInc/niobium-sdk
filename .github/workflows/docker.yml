@@ -1,0 +1,99 @@
+name: Niobium FHE Server Runtime System Docker
+
+on:
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch: # Allow manual triggering
+
+permissions:
+  contents: write
+  packages: write
+  attestations: write
+  id-token: write
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  build:
+    name: Building for Linux
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get architecture & operating system
+        run: |
+          os_name="$(echo ${{ runner.os }} | tr '[:upper:]' '[:lower:]')"
+          echo "OS_NAME=${os_name}" >> "$GITHUB_ENV"
+          if [ ${{ runner.arch }} = "X64" ]; then
+            arch_name=amd64
+          else
+            arch_name="$(echo ${{ runner.arch }} | tr '[:upper:]' '[:lower:]')"
+          fi
+          echo "ARCH_NAME=${arch_name}" >> "$GITHUB_ENV"
+          binary_name="niobium-server-${os_name}-${arch_name}"
+          echo "BINARY_NAME=${binary_name}" >> "$GITHUB_ENV"
+
+      - name: Get version & revision
+        run: |
+          version="$(git describe --tags 2> /dev/null || echo "latest" | sed s/^v//)"
+          echo "VERSION=${version}" >> "$GITHUB_ENV"
+          revision="$(git rev-parse --short HEAD)"
+          echo "REVISION=${revision}" >> "$GITHUB_ENV"
+          if [ "$GITHUB_REF" = "refs/heads/main" ]; then
+            tag_name=latest
+          else
+            tag_name=$(echo "${GITHUB_REF#refs/tags/}" | tr '/' '-')
+          fi
+          echo "TAG_NAME=${tag_name}" >> "$GITHUB_ENV"
+
+      - name: Get docker image name
+        run: |
+          image_name="$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')"
+          docker_image="${{ env.REGISTRY }}/niobiuminc/niobium-server-runtime:${{ env.TAG_NAME }}"
+          echo "DOCKER_IMAGE=${docker_image}" >> "$GITHUB_ENV"
+
+      - name: Authenticate with ghcr.io
+        run: |
+          echo ${{ secrets.GH_PAT }} | \
+            docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
+
+      - name: Set up Docker Buildx
+        run: |
+          docker buildx create --name multiarch-builder --use --driver docker-container
+          docker buildx inspect multiarch-builder --bootstrap
+
+      - name: Build and push Docker images
+        run: |
+          docker buildx build \
+            --file Dockerfile \
+            --platform linux/amd64,linux/arm64 \
+            --build-arg REVISION="${REVISION}" \
+            --build-arg VERSION="${VERSION}" \
+            --label org.opencontainers.image.title="Niobium FHE Server Runtime System" \
+            --label org.opencontainers.image.description="Tools for compiling and running FHE applications." \
+            --label org.opencontainers.image.version=${{ env.TAG_NAME }} \
+            --tag ${{ env.DOCKER_IMAGE }} \
+            --push \
+            .
+
+      # - name: Generate image digest
+      #   run: |
+      #     digest="$(docker buildx imagetools inspect \
+      #       ${{ env.DOCKER_IMAGE }} --raw | grep -o "sha256:[a-f0-9]*")"
+      #     echo "IMAGE_DIGEST=${digest}" >> "$GITHUB_ENV"
+
+      # - name: Generate artifact attestation
+      #   uses: actions/attest-build-provenance@v1
+      #   with:
+      #     subject-name: ${{ env.DOCKER_IMAGE }}
+      #     subject-digest: ${{ env.IMAGE_DIGEST }}
+      #     push-to-registry: true

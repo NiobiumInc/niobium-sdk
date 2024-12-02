@@ -1,0 +1,62 @@
+FROM ghcr.io/niobiuminc/arch-sim:latest AS arch-sim
+FROM ghcr.io/niobiuminc/openfhe-dev:latest AS openfhe
+FROM ghcr.io/niobiuminc/niobium-server:latest AS niobium-server
+FROM ghcr.io/niobiuminc/niobium-compiler:latest AS niobium-compiler
+
+FROM ubuntu:24.04
+
+# Install tools to install the rest of packages
+RUN apt-get update && apt-get install -y \
+    curl \
+    wget \
+    apt-transport-https \
+    gnupg
+
+# Install build tools, LLVM 19, and Clang
+RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | \
+    gpg --dearmor -o /usr/share/keyrings/llvm.gpg
+RUN echo "deb [signed-by=/usr/share/keyrings/llvm.gpg] http://apt.llvm.org/jammy/ llvm-toolchain-jammy-19 main" | \
+    tee /etc/apt/sources.list.d/llvm.list
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    llvm-19 \
+    clang-19 \
+    lldb \
+    && apt-get clean
+
+# Set LLVM commands to base names
+RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-19 100
+RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-19 100
+RUN update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-19 100
+
+# Copy binaries from other images
+COPY --from=arch-sim /usr/local/bin/arch-sim /usr/local/bin/
+COPY --from=arch-sim \
+    /usr/local/etc/arch-sim/arch-sim-basalisc.toml \
+    /usr/local/etc/arch-sim/
+
+COPY --from=openfhe /usr/local/include/ /usr/local/include/
+COPY --from=openfhe /usr/local/lib/ /usr/local/lib/
+
+COPY --from=niobium-server /usr/local/bin/niobium-server /usr/local/bin/
+COPY --from=niobium-server \
+    /usr/local/bin/niobium-server-build.sh \
+    /usr/local/bin/
+COPY --from=niobium-server /usr/local/bin/traefik /usr/local/bin/
+COPY --from=niobium-server /etc/traefik/ /etc/traefik/
+
+COPY --from=niobium-compiler /usr/local/include/ /usr/local/include/
+COPY --from=niobium-compiler /usr/local/lib/ /usr/local/lib/
+COPY --from=niobium-compiler /usr/local/bin/nbcc /usr/local/bin/
+
+# Expose necessary ports
+EXPOSE 80 443 50051
+
+COPY docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+WORKDIR /app
+
+# Use the entrypoint script
+ENTRYPOINT ["/entrypoint.sh"]
