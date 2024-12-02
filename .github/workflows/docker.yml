@@ -14,6 +14,7 @@ permissions:
 
 env:
   REGISTRY: ghcr.io
+  IMAGE_BASE: niobiuminc/niobium-server-runtime
 
 jobs:
   build:
@@ -29,36 +30,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Get architecture & operating system
-        run: |
-          os_name="$(echo ${{ runner.os }} | tr '[:upper:]' '[:lower:]')"
-          echo "OS_NAME=${os_name}" >> "$GITHUB_ENV"
-          if [ ${{ runner.arch }} = "X64" ]; then
-            arch_name=amd64
-          else
-            arch_name="$(echo ${{ runner.arch }} | tr '[:upper:]' '[:lower:]')"
-          fi
-          echo "ARCH_NAME=${arch_name}" >> "$GITHUB_ENV"
-          binary_name="niobium-server-${os_name}-${arch_name}"
-          echo "BINARY_NAME=${binary_name}" >> "$GITHUB_ENV"
-
       - name: Get version & revision
         run: |
           version="$(git describe --tags 2> /dev/null || echo "latest" | sed s/^v//)"
           echo "VERSION=${version}" >> "$GITHUB_ENV"
           revision="$(git rev-parse --short HEAD)"
           echo "REVISION=${revision}" >> "$GITHUB_ENV"
-          if [ "$GITHUB_REF" = "refs/heads/main" ]; then
-            tag_name=latest
-          else
-            tag_name=$(echo "${GITHUB_REF#refs/tags/}" | tr '/' '-')
-          fi
-          echo "TAG_NAME=${tag_name}" >> "$GITHUB_ENV"
 
-      - name: Get docker image name
+      - name: Get Docker image name
         run: |
-          image_name="$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')"
-          docker_image="${{ env.REGISTRY }}/niobiuminc/niobium-server-runtime:${{ env.TAG_NAME }}"
+          docker_image="${{ env.REGISTRY }}/${{ env.IMAGE_BASE }}:${{ env.VERSION }}"
           echo "DOCKER_IMAGE=${docker_image}" >> "$GITHUB_ENV"
 
       - name: Authenticate with ghcr.io
@@ -66,7 +47,7 @@ jobs:
           echo ${{ secrets.GH_PAT }} | \
             docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
 
-      - name: Set up Docker Buildx
+      - name: Set up Docker buildx
         run: |
           docker buildx create --name multiarch-builder --use --driver docker-container
           docker buildx inspect multiarch-builder --bootstrap
@@ -76,11 +57,9 @@ jobs:
           docker buildx build \
             --file Dockerfile \
             --platform linux/amd64,linux/arm64 \
-            --build-arg REVISION="${REVISION}" \
-            --build-arg VERSION="${VERSION}" \
             --label org.opencontainers.image.title="Niobium FHE Server Runtime System" \
-            --label org.opencontainers.image.description="Tools for compiling and running FHE applications." \
-            --label org.opencontainers.image.version=${{ env.TAG_NAME }} \
+            --label org.opencontainers.image.description="Runtime environment for Niobium FHE Server and Tools." \
+            --label org.opencontainers.image.version=${{ env.VERSION }} \
             --tag ${{ env.DOCKER_IMAGE }} \
             --push \
             .
