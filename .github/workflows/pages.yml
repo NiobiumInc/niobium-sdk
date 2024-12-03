@@ -68,8 +68,9 @@ jobs:
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
+        id: deployment
         with:
-          path: out
+          path: web/out
 
   # Deployment job
   deploy:
