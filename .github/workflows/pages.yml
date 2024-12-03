@@ -65,7 +65,8 @@ jobs:
       - name: Build with Next.js
         run: |
           npx --no-install next build
-          ls -lha web
+          pwd
+          ls -lRha .
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
