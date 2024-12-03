@@ -4,11 +4,14 @@ import Link from 'next/link';
 
 const contentDir = path.join(process.cwd(), 'content');
 
-export default function SectionPage({ params }: { params: { section: string } }) {
-  const section = params.section;
+export default async function SectionPage({
+  params,
+}: {
+  params: Promise<{ section: string }>
+}) {
+  const section = (await params).section;
   const sectionPath = path.join(contentDir, section);
 
-  // List all markdown files in the section
   const files = fs.readdirSync(sectionPath);
 
   return (

@@ -9,24 +9,19 @@ const contentDir = path.join(process.cwd(), 'content');
 export default async function ArticlePage({
   params,
 }: {
-  params: { section: string; article: string };
+  params: Promise<{ section: string; article: string }>
 }) {
-  // Await params destructuring
-  const { section, article } = await params;
+  const { section, article } = (await params);
 
-  // Read the Markdown file
   const filePath = path.join(contentDir, section, `${article}.md`);
-  const fileContent = fs.readFileSync(filePath, 'utf-8');
+  const fileContent = await fs.promises.readFile(filePath, 'utf-8');
 
-  // Parse frontmatter and content
   const { data, content } = matter(fileContent);
 
-  // Parse and transform the content with Markdoc
   const ast = Markdoc.parse(content);
-  const html = Markdoc.transform(ast, config);
+  const transformedContent = Markdoc.transform(ast, config);
 
-  // Render HTML on the server
-  const renderedHTML = Markdoc.renderers.html(html);
+  const renderedHTML = Markdoc.renderers.html(transformedContent);
 
   return (
     <article className="prose mx-auto p-4">
