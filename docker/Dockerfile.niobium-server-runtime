@@ -10,7 +10,8 @@ RUN apt-get update && apt-get install -y \
     curl \
     wget \
     apt-transport-https \
-    gnupg
+    gnupg && \
+    apt-get clean
 
 # Install build tools, LLVM 19, and Clang
 RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | \
@@ -18,12 +19,15 @@ RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | \
 RUN echo "deb [signed-by=/usr/share/keyrings/llvm.gpg] http://apt.llvm.org/jammy/ llvm-toolchain-jammy-19 main" | \
     tee /etc/apt/sources.list.d/llvm.list
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    crossbuild-essential-arm64 \
     llvm-19 \
+    llvm-19-dev \
     clang-19 \
-    lldb \
-    && apt-get clean
+    lldb && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set LLVM commands to base names
 RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-19 100
