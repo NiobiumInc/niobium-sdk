@@ -64,7 +64,9 @@ jobs:
         run: npm ci
 
       - name: Build with Next.js
-        run: npx --no-install next build
+        run: |
+          npx --no-install next build
+          touch ${{ github.workspace }}/web/out/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
