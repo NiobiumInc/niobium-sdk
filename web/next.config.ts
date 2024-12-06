@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   distDir: 'out',
   basePath: '/niobium-sdk',
   assetPrefix: '/niobium-sdk/',
+  trailingSlash: true,
 };
 
 export default nextConfig;
