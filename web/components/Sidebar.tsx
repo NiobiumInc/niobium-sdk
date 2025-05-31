@@ -47,31 +47,40 @@ export function Sidebar({ docs }: { docs: DocsBySection }) {
   );
 }
 
-// Renders the reference section with subsections
 function ReferenceSection({ items }: { items: DocMetadata[] }) {
   const grouped: Record<string, DocMetadata[]> = {};
 
   for (const doc of items) {
     const parts = doc.slug.split('/');
 
-    // Top-level .md file (e.g., reference/niobium-server.md)
-    if (parts.length === 2) {
-      const key = parts[1]; // e.g., 'niobium-server'
-      if (!grouped[key]) grouped[key] = [];
-      grouped[key].push(doc);
+    if (parts.length === 3) {
+      // reference/niobium-client/compile => subsection = niobium-client
+      const subsection = parts[1];
+      if (!grouped[subsection]) grouped[subsection] = [];
+      grouped[subsection].push(doc);
     }
 
-    // Nested .md file (e.g., reference/niobium-client/compile.md)
-    if (parts.length === 3) {
-      const key = parts[1]; // e.g., 'niobium-client'
-      if (!grouped[key]) grouped[key] = [];
-      grouped[key].push(doc);
+    if (parts.length === 2) {
+      // Either reference/niobium-client.md or reference/other.md
+      const subsection = parts[1].replace(/\.md$/, '');
+      if (!grouped[subsection]) grouped[subsection] = [];
+      grouped[subsection].push(doc);
     }
+  }
+
+  const sortedGrouped: typeof grouped = {};
+
+  for (const [subsection, docs] of Object.entries(grouped)) {
+    // Look for: reference/niobium-client/niobium-client
+    const canonicalSlug = `reference/${subsection}/${subsection}`;
+    const mainDoc = docs.find((d) => d.slug === canonicalSlug);
+    const others = docs.filter((d) => d.slug !== canonicalSlug);
+    sortedGrouped[subsection] = mainDoc ? [mainDoc, ...others] : others;
   }
 
   return (
     <div className="space-y-4">
-      {Object.entries(grouped).map(([subsection, items]) => (
+      {Object.entries(sortedGrouped).map(([subsection, items]) => (
         <div key={subsection}>
           <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">
             {subsection.replace(/-/g, ' ')}
@@ -93,4 +102,3 @@ function ReferenceSection({ items }: { items: DocMetadata[] }) {
     </div>
   );
 }
-
