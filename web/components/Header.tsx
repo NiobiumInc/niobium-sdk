@@ -20,8 +20,8 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="w-full border-b bg-white text-black dark:bg-black dark:text-white sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="border-b bg-white text-black dark:bg-black dark:text-white sticky top-0 z-50">
+      <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo + Text */}
           <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
@@ -70,7 +70,7 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
-            <Button variant="outline" className="w-full">Join</Button>
+            <Button variant="outline">Join</Button>
             <div className="flex justify-end">
               <ThemeToggle />
             </div>

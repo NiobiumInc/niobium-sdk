@@ -13,10 +13,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <body className="min-h-screen">
         <ThemeProvider>
-          <Header />
+          <div className="max-w-7xl mx-auto px-4">
+            <Header />
 
-          {/* Pad below the fixed header */}
-          <div className="pt-20">
+            {/* Pad below the fixed header */}
             <div className="flex mx-auto min-h-screen">
               {/* Sidebar */}
               <aside className="w-40 lg:w-56 xl:w-64 p-4 border-r">
@@ -25,7 +25,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
               {/* Main content + right index */}
               <div className="flex flex-1">
-                <main id="main-content" className="flex-1 p-6 prose dark:prose-invert max-w-non">
+                <main id="main-content" className="flex-1 p-6 prose dark:prose-invert max-w-none">
                   {children}
                 </main>
 
@@ -34,9 +34,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </aside>
               </div>
             </div>
-          </div>
 
-          <Footer />
+            <Footer />
+          </div>
         </ThemeProvider>
       </body>
     </html>
