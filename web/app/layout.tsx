@@ -1,4 +1,5 @@
 import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 import { Sidebar } from '@/components/Sidebar';
 import { RightIndex } from '@/components/RightIndex';
 import { getDocsMetadata } from '@/lib/getDocsMetadata';
@@ -32,6 +33,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
         </div>
+
+        <Footer />
       </body>
     </html>
   );
