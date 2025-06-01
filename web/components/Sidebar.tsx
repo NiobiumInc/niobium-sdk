@@ -11,39 +11,37 @@ const SECTION: string[] = [
 
 export function Sidebar({ docs }: { docs: DocsBySection }) {
   return (
-    <aside className="w-64 p-4 border-r h-screen overflow-auto">
-      <nav>
-        {SECTION.map((section) => {
-          const items = docs[section];
-          if (!items || items.length === 0) return null;
+    <nav>
+      {SECTION.map((section) => {
+        const items = docs[section];
+        if (!items || items.length === 0) return null;
 
-          return (
-            <div key={section} className="mb-6">
-              <h2 className="text-sm font-semibold uppercase text-gray-600 mb-2">
-                {section}
-              </h2>
+        return (
+          <div key={section} className="mb-6">
+            <h2 className="text-sm font-semibold uppercase text-gray-600 mb-2">
+              {section}
+            </h2>
 
-              {section === 'reference' ? (
-                <ReferenceSection items={items} />
-              ) : (
-                <ul className="space-y-1">
-                  {items.map((doc) => (
-                    <li key={doc.slug}>
-                      <Link
-                        href={`/${doc.slug}`}
-                        className="text-blue-600 hover:underline"
-                      >
-                        {doc.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          );
-        })}
-      </nav>
-    </aside>
+            {section === 'reference' ? (
+              <ReferenceSection items={items} />
+            ) : (
+              <ul>
+              {items.map((doc) => (
+                <li key={doc.slug} className="py-1 border-b border-gray-200 last:border-b-0">
+                  <Link
+                    href={`/${doc.slug}`}
+                    className="block text-gray-800 hover:text-blue-600 hover:underline transition-colors"
+                  >
+                    {doc.title}
+                  </Link>
+                </li>
+              ))}
+              </ul>
+            )}
+          </div>
+        );
+      })}
+    </nav>
   );
 }
 
@@ -87,10 +85,10 @@ function ReferenceSection({ items }: { items: DocMetadata[] }) {
           </h3>
           <ul className="pl-4 space-y-1">
             {items.map((doc) => (
-              <li key={doc.slug}>
+              <li key={doc.slug} className="py-1 border-b border-gray-200 last:border-b-0">
                 <Link
                   href={`/${doc.slug}`}
-                  className="text-blue-600 hover:underline"
+                  className="block text-gray-800 hover:text-blue-600 hover:underline transition-colors"
                 >
                   {doc.title}
                 </Link>
