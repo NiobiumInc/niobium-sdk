@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import Image from 'next/image';
+// import Image from 'next/image';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ThemeToggle';
@@ -9,10 +9,11 @@ import { Menu, X } from 'lucide-react';
 
 const navItems = [
   { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
-  { label: 'Services', href: '/services' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Articles', href: '/articles' },
+  { label: 'Tutorials', href: '/tutorials' },
+  { label: 'Howtos', href: '/howtos' },
+  { label: 'Reference', href: '/reference' },
   { label: 'Get the SDK', href: '/sdk' },
 ];
 
@@ -20,13 +21,12 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="border-b bg-white text-black dark:bg-black dark:text-white sticky top-0 z-50">
+    <header className="border-b sticky top-0 z-50">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo + Text */}
           <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
-            <Image src="/logo.svg" alt="Logo" width={32} height={32} />
-            <span>SiteName</span>
+            Niobium Developer
           </Link>
 
           {/* Desktop Nav */}
@@ -35,8 +35,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm font-medium hover:text-primary transition-colors"
-              >
+                className="text-sm font-medium hover:text-primary">
                 {item.label}
               </Link>
             ))}

@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <html lang="en">
-      <body className="min-h-screen">
+      <body className="min-h-screen theme-surface">
         <ThemeProvider>
           <div className="max-w-7xl mx-auto px-4">
             <Header />

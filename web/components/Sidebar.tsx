@@ -30,8 +30,7 @@ export function Sidebar({ docs }: { docs: DocsBySection }) {
                 <li key={doc.slug} className="py-1 border-b border-gray-200 last:border-b-0">
                   <Link
                     href={`/${doc.slug}`}
-                    className="block text-gray-800 hover:text-blue-600 hover:underline transition-colors"
-                  >
+                    className="block">
                     {doc.title}
                   </Link>
                 </li>
@@ -80,16 +79,15 @@ function ReferenceSection({ items }: { items: DocMetadata[] }) {
     <div className="space-y-4">
       {Object.entries(sortedGrouped).map(([subsection, items]) => (
         <div key={subsection}>
-          <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">
+          <h3 className="text-xs font-bold uppercase tracking-wide mb-1">
             {subsection.replace(/-/g, ' ')}
           </h3>
           <ul className="pl-4 space-y-1">
             {items.map((doc) => (
-              <li key={doc.slug} className="py-1 border-b border-gray-200 last:border-b-0">
+              <li key={doc.slug} className="py-1 border-b last:border-b-0">
                 <Link
                   href={`/${doc.slug}`}
-                  className="block text-gray-800 hover:text-blue-600 hover:underline transition-colors"
-                >
+                  className="block">
                   {doc.title}
                 </Link>
               </li>
