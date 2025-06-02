@@ -33,7 +33,7 @@ const TutorialPage = async ({ params }: TutorialPageProps) => {
   }
 
   return (
-    <div className="prose mx-auto">
+    <div className="mx-auto">
       {Markdoc.renderers.react(content, React)}
     </div>
   );
