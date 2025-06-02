@@ -21,7 +21,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="border-b sticky top-0 z-50">
+    <header className="border-b bg-white dark:bg-black sticky top-0 z-50">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo + Text */}
