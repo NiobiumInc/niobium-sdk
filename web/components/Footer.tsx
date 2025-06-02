@@ -6,15 +6,15 @@ export function Footer() {
           &copy; {new Date().getFullYear()} Niobium Microsystems. All rights reserved.
         </div>
         <div className="flex gap-4">
-          <a href="#">Technology</a>
-          <a href="#">Products</a>
-          <a href="#">About</a>
-          <a href="#">Insights</a>
-          <a href="#">Careers</a>
-          <a href="#">Contact</a>
-          <a href="#">Early Access (NEAP)</a>
-          <a href="#">Terms & Conditions</a>
-          <a href="#">Privacy Policy</a>
+          <a href="https://niobiummicrosystems.com/technology/">Technology</a>
+          <a href="https://niobiummicrosystems.com/products/">Products</a>
+          <a href="https://niobiummicrosystems.com/about/">About</a>
+          <a href="https://niobiummicrosystems.com/insights/">Insights</a>
+          <a href="https://niobium.bamboohr.com/careers">Careers</a>
+          <a href="https://niobiummicrosystems.com/contact/">Contact</a>
+          <a href="https://niobiummicrosystems.com/products/early-access-program/">Early Access (NEAP)</a>
+          <a href="https://niobiummicrosystems.com/terms-conditions/">Terms & Conditions</a>
+          <a href="https://niobiummicrosystems.com/privacy-policy/">Privacy Policy</a>
         </div>
       </div>
     </footer>
