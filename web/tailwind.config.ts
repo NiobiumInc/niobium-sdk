@@ -1,4 +1,7 @@
 import { Config } from 'tailwindcss';
+import typography from '@tailwindcss/typography'
+import resolveConfig from 'tailwindcss/resolveConfig'
+import defaultTheme from 'tailwindcss/defaultTheme'
 
 const config: Config = {
   darkMode: 'class',
@@ -8,6 +11,66 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+      typography: (theme: (path: string) => string | number) => ({
+        DEFAULT: {
+          css: {
+            color: theme('colors.zinc.800'),
+            a: {
+              color: theme('colors.blue.600'),
+              '&:hover': {
+                color: theme('colors.blue.800'),
+              },
+              textDecoration: 'underline',
+            },
+            code: {
+              color: theme('colors.pink.600'),
+              backgroundColor: theme('colors.zinc.100'),
+              padding: '0.2em 0.4em',
+              borderRadius: '0.25rem',
+            },
+            h1: {
+              fontWeight: '200',
+              letterSpacing: '-0.025em',
+              fontSize: theme('fontSize.2xl'),
+              color: theme('colors.zinc.900'),
+            },
+            h2: {
+              fontWeight: '200',
+              fontSize: theme('fontSize.xl'),
+            },
+            h3: {
+              fontWeight: '200',
+            },
+            h4: {
+              fontWeight: '200',
+            },
+            h5: {
+              fontWeight: '200',
+            },
+            h6: {
+              fontWeight: '200',
+            }
+          },
+        },
+        invert: {
+          css: {
+            color: theme('colors.zinc.200'),
+            a: {
+              color: theme('colors.blue.400'),
+              '&:hover': {
+                color: theme('colors.blue.200'),
+              },
+            },
+            code: {
+              color: theme('colors.pink.300'),
+              backgroundColor: theme('colors.zinc.800'),
+            },
+            h1: {
+              color: theme('colors.zinc.100'),
+            },
+          },
+        },
+      }),
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
@@ -57,7 +120,7 @@ const config: Config = {
   		}
   	}
   },
-  plugins: [require('@tailwindcss/typography'), require("tailwindcss-animate")], // Add any plugins here
+  plugins: [typography, require("tailwindcss-animate")], // Add any plugins here
 };
 
 export default config;

@@ -74,7 +74,7 @@
   }
 
   .theme-surface a {
-    @apply text-inherit transition-colors duration-300 hover:text-blue-600
-    dark:hover:text-blue-400;
+    @apply text-inherit transition-colors duration-300 hover:text-orange-600
+    dark:hover:text-orange-400;
   }
 }

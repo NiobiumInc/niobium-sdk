@@ -21,7 +21,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="border-b bg-white dark:bg-black sticky top-0 z-50">
+    <header className="border-b bg-white text-black dark:bg-gray-900 dark:text-white sticky top-0 z-50">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo + Text */}
@@ -42,14 +42,14 @@ export default function Header() {
           </nav>
 
           {/* Right side buttons */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-4 bg-white text-black dark:bg-gray-900 dark:text-white border-gray-200 dark:border-gray-700">
             <Button variant="outline">Join</Button>
             <ThemeToggle />
           </div>
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden flex items-center"
+            className="md:hidden flex items-center bg-white text-black dark:bg-gray-900 dark:text-white border-gray-200 dark:border-gray-700"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
