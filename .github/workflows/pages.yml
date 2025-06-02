@@ -8,6 +8,8 @@ name: Developer Website
 
 on:
   push:
+    branches:
+      - main
     tags:
       - "v*.*"
 
