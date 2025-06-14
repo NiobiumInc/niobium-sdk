@@ -53,6 +53,9 @@ COPY --from=niobium-server /etc/traefik/ /etc/traefik/
 COPY --from=niobium-compiler /usr/local/include/ /usr/local/include/
 COPY --from=niobium-compiler /usr/local/lib/ /usr/local/lib/
 COPY --from=niobium-compiler /usr/local/bin/nbcc /usr/local/bin/
+COPY --from=niobium-compiler \
+    /usr/local/etc/arch-sim/Gen2-TriScheme-FPGA.toml \
+    /usr/local/etc/arch-sim/
 
 # Expose necessary ports
 EXPOSE 80 443 50051
