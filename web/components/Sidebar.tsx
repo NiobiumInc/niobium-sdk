@@ -59,7 +59,7 @@ function ReferenceSection({ items }: { items: DocMetadata[] }) {
 
     if (parts.length === 2) {
       // Either reference/niobium-client.md or reference/other.md
-      const subsection = parts[1].replace(/\.md$/, '');
+      const subsection = parts[1].replace(/\.(md|mdoc)$/, '');
       if (!grouped[subsection]) grouped[subsection] = [];
       grouped[subsection].push(doc);
     }

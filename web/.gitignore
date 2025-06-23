@@ -20,6 +20,9 @@
 # production
 /build
 
+# Pre-rendered Mermaid diagrams
+/public/diagrams
+
 # misc
 .DS_Store
 *.pem
