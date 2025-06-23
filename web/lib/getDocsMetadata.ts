@@ -20,13 +20,13 @@ export function getDocsMetadata(): DocsBySection {
     for (const entry of entries) {
       const fullPath = path.join(dirPath, entry.name);
       const relativePath = path.relative(contentDir, fullPath);
-      const slug = relativePath.replace(/\.md$/, '').replace(/\\/g, '/'); // normalize on Windows
+      const slug = relativePath.replace(/\.(md|mdoc)$/, '').replace(/\\/g, '/'); // normalize on Windows
 
       const topLevelDir = slug.split('/')[0];
 
       if (entry.isDirectory()) {
         walk(fullPath);
-      } else if (entry.isFile() && entry.name.endsWith('.md')) {
+      } else if (entry.isFile() && (entry.name.endsWith('.md') || entry.name.endsWith('.mdoc'))) {
         const raw = fs.readFileSync(fullPath, 'utf-8');
         const { data } = matter(raw);
         const metadata: DocMetadata = {

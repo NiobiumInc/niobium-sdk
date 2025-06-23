@@ -10,8 +10,11 @@ const config: Config = {
     },
   },
   tags: {
-    customTag: {
-      render: 'div',
+    mermaid: {
+      render: 'Mermaid',
+      selfClosing: false,
+      children: ['*'],
+      attributes: {},
     },
   },
 };

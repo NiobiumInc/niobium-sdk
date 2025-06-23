@@ -2,22 +2,23 @@ import fs from 'fs';
 import path from 'path';
 import { notFound } from 'next/navigation';
 import Markdoc from '@markdoc/markdoc';
+import config from '@markdoc/config';
+import components from '@/lib/markdoc/components';
 import React from 'react';
 
-// Helper function to fetch article content
 function getArticleContent(title: string) {
-  const filePath = path.join(process.cwd(), 'content', 'articles', `${title}.md`);
+  const filePath = path.join(process.cwd(), 'content', 'articles', `${title}.mdoc`);
 
   if (!fs.existsSync(filePath)) {
-    return null; // Return null if the file doesn't exist
+    return null;
   }
 
   const fileContent = fs.readFileSync(filePath, 'utf-8');
   const ast = Markdoc.parse(fileContent);
-  const content = Markdoc.transform(ast);
+  const content = Markdoc.transform(ast, config);
 
   return content;
-};
+}
 
 interface ArticlePageProps {
   params: Promise<{ title: string }>;
@@ -28,13 +29,11 @@ const ArticlePage = async ({ params }: ArticlePageProps) => {
   const { title } = await params;
   const content = getArticleContent(title);
 
-  if (!content) {
-    notFound(); // Handle 404 for missing articles
-  }
+  if (!content) notFound();
 
   return (
-    <div className="mx-auto">
-      {Markdoc.renderers.react(content, React)}
+    <div className="prose mx-auto">
+      {Markdoc.renderers.react(content, React, { components })}
     </div>
   );
 };
@@ -47,9 +46,9 @@ export async function generateStaticParams() {
   const files = fs.readdirSync(articlesDir);
 
   const paths = files
-    .filter((file) => file.endsWith('.md'))
+    .filter((file) => file.endsWith('.mdoc'))
     .map((file) => ({
-      title: file.replace(/\.md$/, ''), // Extract title from file name
+      title: file.replace(/\.mdoc$/, ''), // Extract title from file name
     }));
 
   return paths;
