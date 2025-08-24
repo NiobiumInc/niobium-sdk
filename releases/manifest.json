@@ -1,0 +1,18 @@
+[
+  { "desc": "Niobium client macOS amd64",
+    "name": "niobium_0.17.0_darwin_amd64.zip",
+    "url": "https://api.github.com/repos/NiobiumInc/niobium-client/releases/assets/285805428"
+  },
+  { "desc": "Niobium client macOS arm64",
+    "name": "niobium_0.17.0_darwin_arm64.zip",
+    "url": "https://api.github.com/repos/NiobiumInc/niobium-client/releases/assets/285805427"
+  },
+  { "desc": "Niobium client Linux amd64",
+    "name": "niobium_0.17.0_linux_amd64.zip",
+    "url": "https://api.github.com/repos/NiobiumInc/niobium-client/releases/assets/285805424"
+  },
+  { "desc": "Niobium client Linux arm64",
+    "name": "niobium_0.17.0_linux_arm64.zip",
+    "url": "https://api.github.com/repos/NiobiumInc/niobium-client/releases/assets/285805426"
+  }
+]
