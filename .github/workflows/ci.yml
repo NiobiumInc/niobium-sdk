@@ -58,7 +58,7 @@ jobs:
       - name: Fetch release artifacts
         run: |
           ${{github.workspace }}/scripts/fetch-release-artifacts.sh
-        if: startsWith(github.ref, 'refs/tags/v') && matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest'
 
       - name: Release
         uses: softprops/action-gh-release@v2

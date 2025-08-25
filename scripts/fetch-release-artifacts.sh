@@ -15,6 +15,7 @@ jq -c '.[]' "releases/manifest.json" | while read -r item; do
       -H "Accept: application/octet-stream" \
       -o "$OUT_DIR/$name" "$url"
   else
+    echo "Downloading without an authorization token"
     curl -v -fsSL -o "$OUT_DIR/$name" "$url"
   fi
 done
