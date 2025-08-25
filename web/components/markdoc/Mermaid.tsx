@@ -26,7 +26,7 @@ async function processMermaidContent(node: React.ReactNode): Promise<string> {
     const tempFile = await tmpName({ postfix: '.mmd' });
     await fs.writeFile(tempFile, content);
 
-    await execAsync(`npx --yes @mermaid-js/mermaid-cli@10.9.1 -i ${tempFile} -o ${outputPath}`);
+    await execAsync(`npx --yes @mermaid-js/mermaid-cli@10.9.1 -p ./puppeteer.config.json -i ${tempFile} -o ${outputPath}`);
   }
 
   return outputFilename;
