@@ -62,6 +62,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
+      - name: Create directories
+        working-directory: web
+        run: |
+          mkdir -p public/diagrams
+
       - name: Install dependencies
         run: npm ci --force
 
