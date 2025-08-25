@@ -16,6 +16,12 @@ const config: Config = {
       children: ['*'],
       attributes: {},
     },
+    variable: {
+      render: "span",
+      attributes: {
+        name: { type: String },
+      },
+    },
   },
 };
 

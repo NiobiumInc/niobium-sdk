@@ -3,6 +3,7 @@ import path from 'path';
 import { notFound } from 'next/navigation';
 import Markdoc from '@markdoc/markdoc';
 import React from 'react';
+import matter from "gray-matter";
 
 // Helper function to fetch tutorial content
 function getTutorialContent(title: string) {
@@ -13,10 +14,20 @@ function getTutorialContent(title: string) {
   }
 
   const fileContent = fs.readFileSync(filePath, 'utf-8');
-  const ast = Markdoc.parse(fileContent);
-  const content = Markdoc.transform(ast);
+  const { content: md, data: frontmatter } = matter(fileContent);
 
-  return content;
+  const ast = Markdoc.parse(md);
+  const node = Markdoc.transform(
+    ast,
+    {
+      variables: { ...frontmatter },
+      nodes: {
+        variable: { render: React.Fragment },
+      },
+    } as Parameters<typeof Markdoc.transform>[1]
+  );
+
+  return { node, frontmatter };
 };
 
 interface TutorialPageProps {
@@ -26,15 +37,13 @@ interface TutorialPageProps {
 // Page Component
 const TutorialPage = async ({ params }: TutorialPageProps) => {
   const { title } = await params;
-  const content = getTutorialContent(title);
+  const tutorial = getTutorialContent(title);
 
-  if (!content) {
-    notFound(); // Handle 404 for missing tutorials
-  }
+  if (!tutorial) notFound();
 
   return (
-    <div className="mx-auto">
-      {Markdoc.renderers.react(content, React)}
+    <div className="prose mx-auto">
+    {Markdoc.renderers.react(tutorial.node, React)}
     </div>
   );
 };
