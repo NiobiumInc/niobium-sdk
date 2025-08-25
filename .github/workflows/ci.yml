@@ -27,7 +27,7 @@ jobs:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           echo "Using GH_PAT in script"
-          echo "PRIVATE_REPO_PAT=${GH_PAT}"
+          echo "PRIVATE_REPO_PAT=${GH_PAT}" >> "$GITHUB_ENV"
 
       - name: Set up SSH for Private Repo Access
         env:
