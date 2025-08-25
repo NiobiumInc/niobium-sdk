@@ -4,6 +4,7 @@ import { Footer } from '@/components/Footer';
 import { Sidebar } from '@/components/Sidebar';
 import { RightIndex } from '@/components/RightIndex';
 import { getDocsMetadata } from '@/lib/getDocsMetadata';
+import { GoogleAnalytics } from '@next/third-parties/google'
 import './globals.css';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -38,6 +39,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <Footer />
           </div>
         </ThemeProvider>
+        <GoogleAnalytics gaId="G-HNC3RTEQ4X" />
       </body>
     </html>
   );
