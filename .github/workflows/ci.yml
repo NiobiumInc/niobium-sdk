@@ -21,6 +21,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Set up SSH for Private Repo Access
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -29,23 +30,32 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan github.com >> ~/.ssh/known_hosts
+
       - name: Configure Git Authentication
         env:
           GOPRIVATE: "github.com/NiobiumInc"
         run: |
           git config --global url."ssh://git@github.com/".insteadOf "https://github.com/"
+
       - name: Get OS Name & Arch
         run: |
           OS_NAME="$(echo ${{ runner.os }} | tr '[:upper:]' '[:lower:]')"
-          echo "os_name=${OS_NAME}" >> $GITHUB_ENV
+          echo "os_name=${OS_NAME}" >> "$GITHUB_ENV"
           if [ ${{ runner.os }} = "X64" ]; then
             ARCH_NAME=amd64
           else
             ARCH_NAME="$(echo ${{ runner.os }} | tr '[:upper:]' '[:lower:]')"
           fi
-          echo "arch_name=${ARCH_NAME}" >> $GITHUB_ENV
+          echo "arch_name=${ARCH_NAME}" >> "$GITHUB_ENV"
+
+      - name: Fetch release artifacts
+        run: |
+          ${{github.workspace }}/scripts/fetch-release-artifacts.sh
+        if: startsWith(github.ref, 'refs/tags/v') && matrix.os == 'ubuntu-latest'
+
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: not_yet
-        if: startsWith(github.ref, 'refs/tags/v')
+          files: |
+            ${{ github.workspace }}/dist/*
+        if: startsWith(github.ref, 'refs/tags/v') && matrix.os == 'ubuntu-latest'
