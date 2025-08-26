@@ -1,8 +1,8 @@
 ---
-title: Getting Started with the Niobium Client & Server Runtime System (RTS)
+title: Getting Started with the Niobium Client/Server RTS
 ---
 
-# Getting Started with the Niobium Client & Server Runtime System (RTS)
+# Getting Started with the Niobium Client/Server RTS
 
 This tutorial will introduce you to the Niobium command-line interface (CLI)
 client and the Niobium server runtime system (RTS). These tools make it
