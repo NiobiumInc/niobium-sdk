@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Page() {
   return (
     <div>
@@ -5,6 +7,13 @@ export default function Page() {
       <p>
         A list of all the blog posts.
       </p>
+      <ul>
+      <li>
+        <Link href="/blog/announcing-niobium-developer-website/">
+          Announcing Niobium&rsquo;s Developer Website
+        </Link>
+      </li>
+      </ul>
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Page() {
   return (
     <div>
@@ -5,6 +7,13 @@ export default function Page() {
       <p>
         A list of all the howtos.
       </p>
+      <ul>
+      <li>
+        <Link href="/howtos/run-an-fhe-program-with-niobium-client/">
+          How-to Run an FHE Program with Niobium Client
+        </Link>
+      </li>
+      </ul>
     </div>
   );
 }
