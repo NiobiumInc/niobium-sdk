@@ -39,8 +39,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <Footer />
           </div>
         </ThemeProvider>
-        <GoogleAnalytics gaId="G-HNC3RTEQ4X" />
       </body>
+      <GoogleAnalytics gaId="G-HNC3RTEQ4X" />
     </html>
   );
 }

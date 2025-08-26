@@ -43,7 +43,7 @@ export default function Header() {
 
           {/* Right side buttons */}
           <div className="hidden md:flex items-center gap-4 bg-white text-black dark:bg-gray-900 dark:text-white border-gray-200 dark:border-gray-700">
-            <Button variant="outline">Join</Button>
+            <Button variant="outline">Get Developer Key</Button>
             <ThemeToggle />
           </div>
 
@@ -69,7 +69,7 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
-            <Button variant="outline">Join</Button>
+            <Button variant="outline">Get Developer Key</Button>
             <div className="flex justify-end">
               <ThemeToggle />
             </div>
