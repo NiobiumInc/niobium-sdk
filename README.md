@@ -10,11 +10,16 @@ source for GitHub Pages is located here.
 
 ## Installation
 
-TODO
+See [Get the SDK](https://developer.niobiummicrosystems.com/sdk/).
 
 ## Usage
 
-TODO
+See the following documents to get started with the Niobium FHE SDK and
+client/server runtime system:
+
+* [Getting Started with the Niobium Client/Server RTS](https://developer.niobiummicrosystems.com/tutorials/getting-started-with-niobium-client-server-rts/).
+* [Understanding the Niobium Client/Server RTS](https://developer.niobiummicrosystems.com/articles/understanding-niobium-client-server-runtime-tools/).
+* [Understanding the Niobium FHE Software Development Kit](https://developer.niobiummicrosystems.com/articles/understanding-niobium-fhe-sdk/).
 
 ## Support
 
