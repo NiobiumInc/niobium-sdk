@@ -1,0 +1,106 @@
+---
+title: Understanding the Niobium FHE Software Development Kit
+date: 2024-12-05
+description: Overview of the Niobium FHE SDK
+---
+
+# Understanding the Niobium FHE Software Development Kit
+
+## Overview
+
+The Niobium FHE software development kit (SDK) is presently a collection of
+tools based on the [openFHE](https://openfhe.org) library. The SDK is packaged
+in a Docker image.  See [Understanding the Niobium Client/Server
+RTS](https://developer.niobiummicrosystems.com/articles/understanding-niobium-client-server-runtime-tools/)
+for more details.
+
+## Architecture
+
+The overall architecture of the the Niobium FHE SDK is a library-oriented
+programming model. The application source code uses C/C++ function APIs to
+express the desired computation, and the library implements those operations.
+
+This model is natural for normal CPUs, but is not well-suited for co-processor
+style architectures like GPUs and the Niobium FHE hardware accelerator.
+
+For this reason, the current SDK should be considered experimental and
+provisional, and is under active evolution towards a more suited CUDA-like
+model.
+
+### Components
+
+The core components to transform a C++ program into an instruction sequence for
+our hardware ISA (instruction set architecture) are:
+
+* The modified openFHE library containing C-probes at operation sites;
+* The C-probes library that implements collecting the operation sequences;
+* The custom compiler library that converts the operation sequences into ISA
+  sequences and register allocations;
+* The FHE Softcore that processes the instruction sequence as a functional
+  simulator and performance estimator.
+
+If the source code being compiled has been separated into FHE client code and
+FHE server code, the FHE server code can be processed by the Niobium tool
+chain without modification.
+
+If the client and server code are combined in a single source file, or group
+of source files compiled as a unit, the source code must be annotated to
+denote the region that the Niobium compiler should process to produce the
+instruction sequence.
+
+The annotation has two parts. First, the Niobium compiler library header file
+needs to be included. The following example uses a conditional include based
+on a compile-time or source code definition to allow the code to used
+unmodified with either the Niobium tool chain or a normal C/C++ compiler:
+
+```
+#ifdef NIOBIUM_COMPILER
+#include "niobium/compiler.hpp"
+#endif
+```
+
+Second, the region where the FHE server code runs needs to be demarcated:
+
+```
+#ifdef NIOBIUM_COMPILER
+  niobium::compiler().run(multiply, cc, ct1, ct2, multiplication);
+#endif
+```
+
+In this example, the `run` function takes a C++ function-like reference, which
+may be a lambda.
+
+Alternatively, the `start` and `stop` void functions can be used to demarcate
+the FHE server computation, and these functions can span the boundaries of
+other C/C++ functions.
+
+### Interactions
+
+– Protocols, flows, request/response.
+
+### Design Rationale
+
+This design was the quickest and least-costly way to produce an instruction
+sequence for the Niobium FHE hardware accelerator ISA.
+
+### Constraints
+
+The primary constraint driving the current design is the substantial overhead
+to rewrite the openFHE library in a way that is suitable for a compute
+co-processor architecture, like GPUs.
+
+These limitations will start to be addressed by the LLVM-based experimental
+compiler, and a production compiler based on libraries or other
+representations of FHE computation (e.g. [HEIR](https://heir.dev)).
+
+## Extensibility
+
+There is limited extensibility in the current design, other than the typical
+patterns applicable to the overall library-oriented application development
+paradigm.
+
+## Deployment
+
+Deployment of the Niobium FHE SDK is fully contained in the production and
+distribution of the Niobium server RTS Docker image hosted on [GitHub Container
+Registry](https://ghcr.io).
