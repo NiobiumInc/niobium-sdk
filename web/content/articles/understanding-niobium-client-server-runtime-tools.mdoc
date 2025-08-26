@@ -1,8 +1,136 @@
 ---
-title: Understanding the Niobium Client / Server Runtime Tools
+title: Understanding the Niobium Client/Server RTS
 date: 2024-12-05
-description: Overview of the Niobium Client / Server Runtime Tools
+description: Overview of the Niobium Client/Server RTS
 ---
 
-# Overview
+# Understanding the Niobium Client/Server RTS
 
+## Overview
+
+The Niobium client/server runtime system is a gRPC server API and command-line
+interface that collaborate to significantly simplify running FHE applications
+on various hardware computation resources or other FHE processors.
+
+The entire system can be run on a local machine via a Docker container hosting
+the Niobium server.
+
+The architecture supports a BYOT (Bring Your Own Tools) approach to composing
+various proprietary or otherwise heterogeneous FHE tool chains.
+
+## Architecture
+
+Both the Niobium client and server components use a layered architecture
+similar to the TCP/IP or OSI models.
+
+### Components
+
+The server layers and components, from outside-in are:
+
+* The **gRPC** mechanisms,
+* The API endpoint **handlers**,
+* The **service** domain objects,
+* The **system** tools (e.g. reading/writing to disk).
+
+The client layers and components, from interface-to-RPC are:
+
+* The **Cobra** commands,
+* The **command** domain objects,
+* The **RPC** mechanisms,
+* The **system** tools (e.g. reading/writing to disk).
+
+### Interactions
+
+The gRPC protocol provides both unary and streaming requests and responses.
+
+The Niobium server API has a variety of service endpoints depending on the
+necessities of the commands. For example, the `copy` command is a
+bi-directional streaming API endpoint because groups of files may be sent from
+or received by the client in a single invocation of the command.
+
+The details of each service endpoint are covered in the [reference
+documentation](https://developer.niobiummicrosystems.com/reference/niobium-server/niobium-server/)
+for the endpoints.
+
+### Design Rationale
+
+The design of the Niobium client/server components is dictated by the FHE
+domain. It is fundamentally a client/server architecture, with the client
+being trusted and performing encryption and decryption of plaintext data, and
+the server only computing on the ciphertexts.
+
+Additionally, the FHE field is under active research and development. Schemes,
+libraries, tool chains and hardware are rapidly evolving. The Niobium
+client/server provides a solid skeleton of interaction that supports the
+evolution in the ecosystem, while also providing infrastructural stability for
+development workflows, continuous-integration and continuous-delivery
+pipelines, and for community collaboration and sharing.
+
+### Constraints
+
+The three most relevant constraints informing this design are:
+
+1. FHE is fundamentally a distribute architecture, with critical security
+properties deriving from the distinction between client components and server
+components;
+1. The field and tools are highly complex and require significant effort to
+install, use, update, and collobarate.
+1. The need to support as much standardization as possible to accelerate early
+commercial development.
+
+## Extensibility
+
+The gRPC server API is versioned at the Protobuf resources and services
+definitions.
+
+The versioning is also reflected in the client at the RPC layer, which each
+command having its own versioned client.
+
+The principled layering of both the client and the server support minimal
+changes when a command UI or API endpoint needs to be updated. The changes are
+isolated to a specific layer or stack of layers without impacting other code.
+This substantially reduces maintenance costs and thus supports efficient
+modifications in a domain like FHE that is undergoing rapid innovation.
+
+Further variability is provided via the standard configuration system that
+supports a hierarchy of precedence for configuration values as follows,
+highest precedence first:
+
+1. Explicitly set configuration item value;
+1. Environment variable;
+1. Application default value.
+
+## Deployment
+
+Despite their tight integration, the Niobium client and server are completely
+separable. It's conceivable that the Niobium client could talk to a different
+gRPC API that mirrors the expected structure. But it's more realistic that
+different clients would talk to the same Niobium server API. This would enable
+building:
+
+1. Alternate CLI clients;
+1. Graphical or web-based interfaces; and
+1. Service interfaces where the Niobium server could be a component in a
+server-side system, either collocated or networked.
+
+### Niobium Client
+
+The Niobium client is available as a Homebrew cask and binary recipe. Unless
+the source code is open-sourced, it cannot be used as a source recipe, which
+would enable installing on any environment with a Go tool chain. However, Go
+makes it extremely simple to create platform-compatible, statically-linked
+executables.
+
+### Niobium Server
+
+The Niobium server is deployed on various server infrastructure. It can be
+on-premise or cloud-based.
+
+With the proxy mode configuration, the Niobium server can be deployed in a
+layered arrangement where the leaf nodes are FHE processors and the
+intermediate nodes route and manage job submissions and completion statuses.
+
+### Niobium Server RTS Docker Image
+
+The Niobium server RTS Docker images are hosted on the [GitHub Container
+Registry](ghcr.io)
