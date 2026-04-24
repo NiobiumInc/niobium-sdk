@@ -1,0 +1,154 @@
+THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
+============================================================
+
+Project: niobium-sdk
+Generated: 2026-04-24
+Tool: SCANOSS (snippet detection with License dataset)
+Components: 10
+
+This file lists all third-party software components detected
+in this repository, along with their licenses and copyright
+notices as required by those licenses.
+
+------------------------------------------------------------
+
+WARNING: The following component(s) have no license information.
+These require manual review to determine licensing terms.
+
+  - @hyoban/utils (https://www.npmjs.com/package/%40hyoban/utils)
+  - obsidian-docs (https://github.com/obsidianmd/obsidian-docs)
+  - void-website (https://github.com/voideditor/void-website)
+
+------------------------------------------------------------
+
+LICENSE SUMMARY
+
+  AGPL-3.0-only [COPYLEFT]: 1 component(s)
+  Apache-2.0: 1 component(s)
+  MIT: 5 component(s)
+
+------------------------------------------------------------
+
+COMPONENT ATTRIBUTIONS
+
+  @hyoban/utils
+  Version: 4.1.0
+  Source: https://www.npmjs.com/package/%40hyoban/utils
+  PURL: pkg:npm/%40hyoban/utils
+  Copyright:
+    Copyright (c) 2022 Shu Ding
+  License: UNKNOWN — requires manual review
+
+  DuckCoding
+  Version: v1.4.7
+  Source: https://github.com/DuckCoding-dev/DuckCoding
+  PURL: pkg:github/duckcoding-dev/duckcoding
+  Copyright:
+    Copyright 2007 Free Software Foundation Inc.  https:  fsf.org
+  License: AGPL-3.0-only
+
+  electron-demo
+  Version: v0.0.1
+  Source: https://github.com/pinky-pig/electron-demo
+  PURL: pkg:github/pinky-pig/electron-demo
+  License: MIT
+
+  git.luolix.top/oxisto/money-gopher
+  Version: v0.2.1
+  Source: https://proxy.golang.org/git.luolix.top/oxisto/money-gopher/@v/v0.2.1.zip
+  PURL: pkg:golang/git.luolix.top/oxisto/money-gopher
+  Copyright:
+    Copyright copyright owner or entity authorized by
+  License: Apache-2.0
+
+  Nextjs-Tailwind-radix-shadcn-UI--Staterkit
+  Version: V0.1
+  Source: https://github.com/Drake0306/Nextjs-Tailwind-radix-shadcn-UI--Staterkit
+  PURL: pkg:github/drake0306/nextjs-tailwind-radix-shadcn-ui--staterkit
+  Copyright:
+    Copyright (c) 2023 Abhinav Roy
+  License: MIT
+
+  NyaaStats
+  Version: v2.1.0
+  Source: https://github.com/nyaacat/nyaastats
+  PURL: pkg:github/nyaacat/nyaastats
+  Copyright:
+    Copyright 2017 NyaaCat
+    Copyright (c) 2017 NyaaCat
+  License: MIT
+
+  obsidian-docs
+  Version: bf2324b
+  Source: https://github.com/obsidianmd/obsidian-docs
+  PURL: pkg:github/obsidianmd/obsidian-docs
+  License: UNKNOWN — requires manual review
+
+  ui
+  Version: shadcn@2.1.1
+  Source: https://github.com/shadcn-ui/ui
+  PURL: pkg:github/shadcn-ui/ui
+  Copyright:
+    Copyright 2023 shadcn
+    Copyright (c) 2023 shadcn
+  License: MIT
+
+  ui
+  Version: shadcn@2.4.0
+  Source: https://github.com/shadcn/ui
+  PURL: pkg:github/shadcn/ui
+  Copyright:
+    Copyright 2023 shadcn
+    Copyright (c) 2023 shadcn
+  License: MIT
+
+  void-website
+  Version: d699452
+  Source: https://github.com/voideditor/void-website
+  PURL: pkg:github/voideditor/void-website
+  License: UNKNOWN — requires manual review
+
+------------------------------------------------------------
+
+FULL LICENSE TEXTS
+
+--- AGPL-3.0-only ---
+
+Full license text available at: https://spdx.org/licenses/AGPL-3.0-only.html
+
+
+--- MIT ---
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+--- Apache-2.0 ---
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
