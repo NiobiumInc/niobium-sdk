@@ -1,0 +1,22 @@
+{
+  "curations": {
+    "@hyoban/utils": {
+      "license": "UNKNOWN",
+      "reviewed": null,
+      "reviewer": null,
+      "note": "Not on GitHub: https://www.npmjs.com/package/%40hyoban/utils"
+    },
+    "obsidian-docs": {
+      "license": "UNKNOWN",
+      "reviewed": null,
+      "reviewer": null,
+      "note": "No license found at github.com/obsidianmd/obsidian-docs"
+    },
+    "void-website": {
+      "license": "UNKNOWN",
+      "reviewed": null,
+      "reviewer": null,
+      "note": "No license found at github.com/voideditor/void-website"
+    }
+  }
+}
